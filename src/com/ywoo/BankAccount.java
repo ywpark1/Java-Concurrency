@@ -31,4 +31,14 @@ class BankAccount {
             balance -= amount;
         }
     }
+
+    // No need to add synchronized keyword here
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    // No need to add synchronized keyword here
+    public void printAccountNumber() {
+        System.out.println("Account number = " + accountNumber);
+    }
 }
