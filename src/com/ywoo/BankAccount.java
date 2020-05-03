@@ -1,13 +1,19 @@
 package com.ywoo;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 class BankAccount {
 
     private double balance;
     private String accountNumber;
 
+    private Lock lock;
+
     public BankAccount(String accountNumber, double initialBalance) {
         this.accountNumber = accountNumber;
         this.balance = initialBalance;
+        this.lock = new ReentrantLock();
     }
 
     // Using synchronized function
@@ -21,14 +27,20 @@ class BankAccount {
 
     // Using synchronized object(this)
     public void deposit(double amount) {
-        synchronized (this) {
+        lock.lock();
+        try {
             balance += amount;
+        } finally {
+            lock.unlock();
         }
     }
 
     public void withdraw(double amount) {
-        synchronized (this) {
+        lock.lock();
+        try {
             balance -= amount;
+        } finally {
+            lock.unlock();
         }
     }
 

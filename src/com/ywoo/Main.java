@@ -23,6 +23,11 @@ public class Main {
 //        };
 
         // using Runnable
+        // Considerations :
+        // 1.Both threads need to compete for the same lock, so we create only one lock object
+        // that we use in all the methods that have critical sections of code
+        // 2. We put the critical section of code within a try/finally block, to ensure
+        // that the lock will be released
         Thread trThread1 = new Thread(new Runnable() {
             @Override
             public void run() {
