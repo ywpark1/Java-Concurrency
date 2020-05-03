@@ -81,6 +81,12 @@ public class Main {
 //        studentThread.start();
 
         /* NewTutor and NewStudent */
+        // DeadLock issue
+        // check the place where the code calls wait() and see if that may cause a deadlock.
+        // The wait() method results in a thread releasing a lock before it has exited the synchronized block,
+        // and this premature release can lead to problems if we’re not careful
+        // Possible solution : use ReentrantLock objects. The tutor thread release the student lock
+        // before it calls wait(), and then try to reaquire it again when it wakes up.
         final NewTutor tutor = new NewTutor();
         final NewStudent student = new NewStudent(tutor);
         tutor.setStudent(student);
