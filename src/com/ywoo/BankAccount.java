@@ -28,10 +28,14 @@ class BankAccount {
 
     // Using synchronized object(this)
     public void deposit(double amount) {
+
+        boolean status = false;
+
         try {
             if(lock.tryLock(1000, TimeUnit.MILLISECONDS)) {
                 try {
                     balance += amount;
+                    status = true;
                 } finally {
                     lock.unlock();
                 }
@@ -39,13 +43,18 @@ class BankAccount {
                 System.out.println("Could not get the lock");
             }
         } catch(InterruptedException e) {}
+
+        System.out.println("Transactions status = " + status);
     }
 
     public void withdraw(double amount) {
+
+        boolean status = false;
         try {
             if(lock.tryLock(1000, TimeUnit.MILLISECONDS)) {
                 try {
                     balance -= amount;
+                    status = true;
                 } finally {
                     lock.unlock();
                 }
@@ -53,6 +62,8 @@ class BankAccount {
                 System.out.println("Could not get the lock");
             }
         } catch(InterruptedException e) {}
+
+        System.out.println("Transactions status = " + status);
     }
 
     // No need to add synchronized keyword here
