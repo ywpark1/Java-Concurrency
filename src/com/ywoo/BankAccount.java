@@ -9,12 +9,12 @@ class BankAccount {
     private double balance;
     private String accountNumber;
 
-    private Lock lock;
+    private Lock lock = new ReentrantLock();
 
     public BankAccount(String accountNumber, double initialBalance) {
         this.accountNumber = accountNumber;
         this.balance = initialBalance;
-        this.lock = new ReentrantLock();
+//        this.lock = new ReentrantLock();
     }
 
     // Using synchronized function
